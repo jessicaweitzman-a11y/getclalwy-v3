@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clawly — Your admin. Handled.</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; background: #fff; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Banner */
+    .banner { background: #1a1a1a; color: #fff; text-align: center; padding: 10px 16px; font-size: 14px; }
+    .banner a { color: #f97316; font-weight: 600; }
+
+    /* Nav */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
+    .nav-logo { font-size: 22px; font-weight: 700; }
+    .nav-links { display: flex; gap: 28px; align-items: center; font-size: 15px; }
+    .nav-links a:hover { color: #f97316; }
+    .btn { display: inline-block; padding: 10px 22px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all .2s; }
+    .btn-primary { background: #f97316; color: #fff; }
+    .btn-primary:hover { background: #ea580c; }
+    .btn-outline { border: 1px solid #ddd; }
+    .btn-outline:hover { border-color: #f97316; color: #f97316; }
+
+    /* Sections */
+    section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+    .text-center { text-align: center; }
+    h1 { font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+    h2 { font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { font-size: 19px; color: #555; max-width: 620px; margin: 0 auto 32px; }
+    .small-note { font-size: 13px; color: #888; margin-top: 8px; }
+
+    /* Hero */
+    .hero { padding-top: 100px; padding-bottom: 60px; }
+    .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 32px; }
+    .hero-tags span { background: #f5f5f5; padding: 6px 16px; border-radius: 20px; font-size: 14px; color: #444; }
+    .platform-select { margin-top: 36px; }
+    .platform-select p { font-size: 14px; color: #666; margin-bottom: 12px; }
+    .platform-btns { display: flex; justify-content: center; gap: 12px; }
+    .platform-btns .btn { font-size: 14px; padding: 8px 18px; border: 1px solid #ddd; border-radius: 8px; }
+    .powered { font-size: 13px; color: #999; margin-top: 24px; }
+
+    /* Pain Points */
+    .pain { background: #fafafa; border-radius: 16px; padding: 60px 40px; margin: 0 auto; max-width: 1100px; }
+    .pain-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 28px 0; }
+    .pain-tags span { background: #fee2e2; color: #b91c1c; padding: 6px 16px; border-radius: 20px; font-size: 14px; }
+    .pain-bottom { font-size: 17px; color: #555; max-width: 560px; margin: 0 auto; margin-top: 20px; }
+
+    /* Comparison */
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+    .compare-card { border: 1px solid #eee; border-radius: 16px; padding: 32px; }
+    .compare-card.clawly { border-color: #f97316; background: #fffbf5; }
+    .compare-card h3 { margin-bottom: 4px; }
+    .compare-card .price { font-size: 15px; color: #888; margin-bottom: 20px; }
+    .compare-card ul { list-style: none; }
+    .compare-card ul li { padding: 8px 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+    .compare-card ul li::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+    .compare-card.va ul li::before { background: #ddd; }
+    .compare-card.clawly ul li::before { background: #f97316; }
+    .compare-label { text-align: center; margin-top: 24px; font-style: italic; color: #888; font-size: 15px; }
+
+    /* Use Cases */
+    .usecases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+    .usecase { border: 1px solid #eee; border-radius: 14px; padding: 24px; }
+    .usecase .user-msg { background: #f5f5f5; padding: 12px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 12px; color: #333; }
+    .usecase .bot-msg { font-size: 13px; color: #888; }
+    .usecase .bot-msg .via { color: #f97316; font-weight: 600; }
+
+    /* Benefits */
+    .benefits-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 40px; }
+    .benefit { padding: 28px; border: 1px solid #eee; border-radius: 14px; }
+    .benefit p { font-size: 15px; color: #555; margin-top: 8px; }
+
+    /* Testimonials */
+    .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+    .testimonial { background: #fafafa; border-radius: 14px; padding: 24px; }
+    .testimonial p { font-size: 15px; color: #444; font-style: italic; }
+    .testimonial .source { font-size: 13px; color: #999; margin-top: 12px; font-style: normal; }
+
+    /* Pricing */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .pricing-card { border: 1px solid #eee; border-radius: 16px; padding: 32px; position: relative; }
+    .pricing-card.popular { border-color: #f97316; box-shadow: 0 0 0 2px #f97316; }
+    .pricing-card.popular::before { content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #f97316; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; }
+    .pricing-card .plan-name { font-size: 18px; font-weight: 700; }
+    .pricing-card .plan-price { font-size: 42px; font-weight: 800; margin: 12px 0 4px; }
+    .pricing-card .plan-price span { font-size: 16px; font-weight: 400; color: #888; }
+    .pricing-card ul { list-style: none; margin: 20px 0; }
+    .pricing-card ul li { padding: 6px 0; font-size: 14px; color: #555; }
+    .pricing-card ul li::before { content: "\2713 "; color: #f97316; font-weight: 700; margin-right: 6px; }
+    .pricing-card .btn { width: 100%; text-align: center; margin-top: 12px; }
+    .pricing-note { text-align: center; margin-top: 28px; font-size: 15px; color: #666; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 80px 40px; }
+    .cta-section .subtitle { margin-bottom: 28px; }
+
+    /* Footer */
+    footer { text-align: center; padding: 32px 40px; border-top: 1px solid #eee; font-size: 13px; color: #999; }
+    footer a { margin: 0 12px; color: #888; }
+    footer a:hover { color: #f97316; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 34px; }
+      h2 { font-size: 26px; }
+      section { padding: 50px 20px; }
+      .comparison-grid, .usecases-grid, .benefits-grid, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      nav { padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Banner -->
+  <div class="banner">
+    Free plan. 50 messages per day. No credit card. Ready in 60 seconds. <a href="#">Start free &rarr;</a>
+  </div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo">🦞 Clawly</div>
+    <div class="nav-links">
+      <a href="#">Integrations</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#" class="btn btn-outline">Log in</a>
+      <a href="#" class="btn btn-primary">Hire Clawly</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero text-center">
+    <h1>Increase ticket throughput. Reduce overhead.</h1>
+    <p class="subtitle">Clawly handles repetitive ops work across your tools, so your team can focus on higher-value service delivery.</p>
+    <div class="hero-tags">
+      <span>Free plan</span>
+      <span>Ready in 60 seconds</span>
+      <span>Works 24/7</span>
+    </div>
+    <a href="#" class="btn btn-primary" style="font-size:17px; padding:14px 32px;">See how Clawly fits your stack &rarr;</a>
+  </section>
+
+  <!-- Pain Points -->
+  <div class="pain text-center">
+    <h2>You didn't start a business to manage admin.</h2>
+    <div class="pain-tags">
+      <span>Deposit reminders</span>
+      <span>Calendar ping-pong</span>
+      <span>Follow-up emails</span>
+      <span>Chasing payments</span>
+      <span>Reschedule requests</span>
+      <span>Admin that isn't billable</span>
+    </div>
+    <p class="pain-bottom">Every hour on admin is an hour you're not earning. Clawly handles all of it.</p>
+  </div>
+
+  <!-- Comparison -->
+  <section class="text-center">
+    <h2>Delegation &gt; Automation<br/>Same work. 96% less cost.</h2>
+    <div class="comparison-grid">
+      <div class="compare-card va">
+        <h3>Human Virtual Assistant</h3>
+        <p class="price">$1,500–$3,000/month &bull; $24,000+/year</p>
+        <ul>
+          <li>Works 8 hours/day, 5 days/week</li>
+          <li>Requires training on tools</li>
+          <li>Takes vacation/sick days</li>
+          <li>Needs management</li>
+          <li>May quit after training</li>
+          <li>Time zone limitations</li>
+          <li>Makes mistakes when tired</li>
+        </ul>
+      </div>
+      <div class="compare-card clawly">
+        <h3>Clawly</h3>
+        <p class="price">$0–$79/month &bull; $0–$948/year</p>
+        <ul>
+          <li>Works 24/7</li>
+          <li>Knows tools already</li>
+          <li>Never takes days off</li>
+          <li>No management required</li>
+          <li>Always available</li>
+          <li>Instant responses, any timezone</li>
+          <li>Consistent and reliable</li>
+        </ul>
+        <p style="margin-top: 16px; font-style: italic; color: #f97316; font-weight: 600;">Not software — an employee</p>
+      </div>
+    </div>
+    <p class="compare-label">not software — a worker</p>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="text-center">
+    <h2>Your AI employee, one message away.</h2>
+    <p class="subtitle">Just message Clawly. It handles the execution inside your tools.</p>
+    <div class="usecases-grid">
+      <div class="usecase">
+        <div class="user-msg">"Send an invoice to Acme Corp for 20 hours at $85/hr"</div>
+        <div class="bot-msg">Invoice sent &bull; <span class="via">via Stripe</span></div>
+      </div>
+      <div class="usecase">
+        <div class="user-msg">"Schedule a call with Sarah next Tuesday afternoon"</div>
+        <div class="bot-msg">Meeting scheduled &bull; <span class="via">via Calendly</span></div>
+      </div>
+      <div class="usecase">
+        <div class="user-msg">"Follow up with John — he hasn't replied in 3 days"</div>
+        <div class="bot-msg">Follow-up sent &bull; <span class="via">via Gmail</span></div>
+      </div>
+      <div class="usecase">
+        <div class="user-msg">"Remind me about the contract renewal next Friday"</div>
+        <div class="bot-msg">Reminder set &bull; <span class="via">Built-in</span></div>
+      </div>
+      <div class="usecase">
+        <div class="user-msg">"What's on my calendar today?"</div>
+        <div class="bot-msg">Here's your schedule &bull; <span class="via">via Google Calendar</span></div>
+      </div>
+      <div class="usecase">
+        <div class="user-msg">"Add a task: send mockups to client by Friday"</div>
+        <div class="bot-msg">Task added &bull; <span class="via">via Trello</span></div>
+      </div>
+    </div>
+    <p style="margin-top: 24px;"><a href="#" style="color: #f97316; font-weight: 600;">See all 50+ skills &rarr;</a></p>
+  </section>
+
+  <!-- Benefits -->
+  <section class="text-center">
+    <h2>Time spent on admin is revenue lost.</h2>
+    <div class="benefits-grid">
+      <div class="benefit">
+        <h3>Turn admin into revenue.</h3>
+        <p>Every hour you spend on invoices and follow-ups is an hour you're not selling. Clawly handles the busywork so you can focus on billable work.</p>
+      </div>
+      <div class="benefit">
+        <h3>Nothing slips through.</h3>
+        <p>Leads get replies. Invoices get sent. Follow-ups happen on time. Clawly does the work exactly when it needs to happen.</p>
+      </div>
+      <div class="benefit">
+        <h3>Hire software, not staff.</h3>
+        <p>No recruiting. No training. No management. Clawly covers your ops for a fraction of the cost of a VA.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="text-center">
+    <h2>We've all been there.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p>"I just realized I never sent my invoice for a job I did almost 3 years ago... the invoice is worth a little over $2.5k"</p>
+        <div class="source">— r/freelance</div>
+      </div>
+      <div class="testimonial">
+        <p>"I once replied to the wrong client with another client's file. Almost lost a project because I forgot to follow up on their feedback for two weeks."</p>
+        <div class="source">— r/smallbusiness</div>
+      </div>
+      <div class="testimonial">
+        <p>"I've taken on a few clients on retainer and found myself spending a fair bit of time on admin. Each client has their own timesheet system, accounting standards... let alone internal task management, admin emails, invoicing."</p>
+        <div class="source">— r/freelance</div>
+      </div>
+      <div class="testimonial">
+        <p>"Did anyone become a freelancer to work less and earn more? Only to work a lot more and earn a marginally higher income when you factor in non-billable time."</p>
+        <div class="source">— r/freelance</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="text-center">
+    <h2>Simple Pricing</h2>
+    <p class="subtitle">Less than one hour of your billable time.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="plan-name">Free</p>
+        <p class="plan-price">$0<span>/month</span></p>
+        <ul>
+          <li>No credit card required</li>
+          <li>50 messages/day</li>
+          <li>Writing &amp; drafting</li>
+          <li>Web research</li>
+          <li>Reminders &amp; follow-ups</li>
+          <li>Brainstorming</li>
+          <li>Telegram access</li>
+        </ul>
+        <a href="#" class="btn btn-outline">Get Started Free</a>
+      </div>
+      <div class="pricing-card popular">
+        <p class="plan-name">Pro</p>
+        <p class="plan-price">$29<span>/month</span></p>
+        <ul>
+          <li>Unlimited messages</li>
+          <li>Up to 3 integrations</li>
+          <li>Gmail, Calendar, Calendly</li>
+          <li>Telegram, Discord, Slack</li>
+          <li>All AI models</li>
+          <li>24/7 availability</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Hire Clawly — Pro</a>
+      </div>
+      <div class="pricing-card">
+        <p class="plan-name">Unlimited</p>
+        <p class="plan-price">$79<span>/month</span></p>
+        <ul>
+          <li>Unlimited messages</li>
+          <li>Unlimited integrations</li>
+          <li>24/7 availability</li>
+          <li>Scheduled tasks</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Go Unlimited</a>
+      </div>
+    </div>
+    <p class="pricing-note">A human VA costs $1,500+ per month. Clawly Pro costs $29.</p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta-section">
+    <h2>It's time to delegate.</h2>
+    <p class="subtitle">Let Clawly take it from here.</p>
+    <a href="#" class="btn btn-primary" style="font-size:17px; padding:14px 32px;">Hire Clawly — It's Free</a>
+    <p class="powered">Powered by OpenClaw 🦞</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Clawly &bull; <a href="#">Terms</a> &bull; <a href="#">Privacy</a></p>
+  </footer>
+
+</body>
+</html>
